@@ -1,14 +1,23 @@
+package com.ejemplo.articulos; // Paquete base de la aplicación
 
-package com.ejemplo.articulos;
-
+// Importamos la clase SpringApplication, que permite arrancar la app
 import org.springframework.boot.SpringApplication;
+// Importamos la anotación SpringBootApplication, que marca el punto de entrada
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-// Marca esta clase como el punto de entrada de Spring Boot
-@SpringBootApplication
-public class ArticuloApiApplication {
-    public static void main(String[] args) {
-        // Lanza la aplicación
-        SpringApplication.run(ArticuloApiApplication.class, args);
-    }
-}
+/**
+ * Clase principal de la aplicación Spring Boot.
+ * Es el punto de entrada del programa y contiene el método main.
+ */
+@SpringBootApplication // Indica a Spring Boot que esta es la clase de configuración principal
+public class ArticuloApiApplication { // Declaración de la clase pública
+
+    /**
+     * Método main: punto de entrada estándar de una aplicación Java.
+     * Desde aquí se inicia el contexto de Spring y el servidor embebido.
+     */
+    public static void main(String[] args) { // Declaración del método main con argumentos de línea de comandos
+        // Llamamos a run para iniciar la aplicación Spring Boot
+        SpringApplication.run(ArticuloApiApplication.class, args); // Ejecuta la app levantando el contexto y el servidor
+    } // Fin del método main
+} // Fin de la clase ArticuloApiApplication

@@ -1,61 +1,53 @@
-// Paquete donde se encuentra la clase
-package com.ejemplo.articulos.repository;
+package com.ejemplo.articulos.repository; // Paquete donde se define el repositorio de Articulo
 
-// Importamos el modelo de datos Articulo
+// Importamos la clase Articulo que será gestionada por este repositorio
 import com.ejemplo.articulos.model.Articulo;
-
-// Importamos JpaRepository, que nos da los métodos CRUD listos
+// Importamos JpaRepository, interfaz de Spring Data que provee operaciones CRUD genéricas
 import org.springframework.data.jpa.repository.JpaRepository;
-
-// Importamos la anotación @Repository que marca esta interfaz como componente de acceso a datos
+// Importamos la anotación Repository para marcar la interfaz como componente de acceso a datos
 import org.springframework.stereotype.Repository;
 
-//import java.util.List;
+import java.util.List; // Importamos la interfaz List para manejar colecciones de Articulo
 
-// Esta interfaz se conecta con la base de datos y maneja operaciones sobre la entidad Articulo
-@Repository
-public interface ArticuloRepository extends JpaRepository<Articulo, Long> {
-
-    // ===============================================
-    // 🚀 MÉTODOS CRUD INCLUIDOS AUTOMÁTICAMENTE
-    // ===============================================
-    // findAll()                -> Lista todos los artículos
-    // findById(Long id)        -> Busca uno por ID
-    // save(Articulo a)         -> Inserta o actualiza
-    // deleteById(Long id)      -> Elimina por ID
-    // count()                  -> Cuenta registros
-    // existsById(Long id)      -> Verifica si existe un ID
-
-    // ===============================================
-    // 🛠️ MÉTODOS PERSONALIZADOS (se generan por nombre)
-    // ===============================================
-
-}
-
-
-/*
- 
-    // Buscar artículos por nombre exacto
-    List<Articulo> findByNombre(String nombre);
-
-    // Buscar artículos cuyo nombre contenga una palabra (LIKE '%texto%')
-    List<Articulo> findByNombreContaining(String texto);
-
-    // Buscar artículos con precio mayor a un valor dado
-    List<Articulo> findByPrecioGreaterThan(Double precio);
-
-    // Buscar artículos con precio entre dos valores
-    List<Articulo> findByPrecioBetween(Double min, Double max);
-
-    // Buscar por nombre ignorando mayúsculas y minúsculas
-    List<Articulo> findByNombreIgnoreCase(String nombre);
-
-    // Buscar artículos ordenados por precio ascendente
-    List<Articulo> findAllByOrderByPrecioAsc();
-
-    // Buscar artículos por nombre y precio mayor a cierto valor
-    List<Articulo> findByNombreAndPrecioGreaterThan(String nombre, Double precio);
- * 
- * 
- * 
+/**
+ * Interfaz de repositorio para la entidad Articulo.
+ * Extiende JpaRepository para obtener métodos CRUD listos para usar.
  */
+@Repository // Indica que esta interfaz es un componente de acceso a datos (DAO/Repository)
+public interface ArticuloRepository extends JpaRepository<Articulo, Long> { // Especifica la entidad y el tipo de su ID
+
+    // ==============================
+    // Métodos personalizados
+    // ==============================
+
+    /**
+     * Busca artículos cuyo nombre contenga el texto indicado (búsqueda parcial),
+     * ignorando mayúsculas y minúsculas.
+     */
+    List<Articulo> findByNombreContainingIgnoreCase(String nombre); // Devuelve artículos cuyo nombre contiene el texto
+
+    /**
+     * Busca artículos con un precio mayor o igual al valor indicado.
+     */
+    List<Articulo> findByPrecioGreaterThanEqual(Double precioMinimo); // Devuelve artículos con precio >= precioMinimo
+
+    /**
+     * Busca artículos con un precio menor o igual al valor indicado.
+     */
+    List<Articulo> findByPrecioLessThanEqual(Double precioMaximo); // Devuelve artículos con precio <= precioMaximo
+
+    /**
+     * Busca artículos con precio entre dos valores (inclusive).
+     */
+    List<Articulo> findByPrecioBetween(Double precioMinimo, Double precioMaximo); // Devuelve artículos entre un rango
+
+    /**
+     * Busca artículos filtrando simultáneamente por texto en el nombre
+     * y por un rango de precios.
+     */
+    List<Articulo> findByNombreContainingIgnoreCaseAndPrecioBetween( // Combina filtro por nombre y rango de precio
+            String nombre,        // Texto que debe aparecer en el nombre
+            Double precioMinimo,  // Límite inferior del precio
+            Double precioMaximo   // Límite superior del precio
+    ); // Fin de la declaración del método
+} // Fin de la interfaz ArticuloRepository
